@@ -96,13 +96,30 @@ ALTER TABLE media
     FOREIGN KEY (media_type_id) REFERENCES media_types(id)
       ON DELETE CASCADE;   
       
-
+ALTER TABLE messages
+  ADD CONSTRAINT messages_from_user_id_fk 
+    FOREIGN KEY (from_user_id) REFERENCES users(id)
+      ON DELETE CASCADE; 
       
+ALTER TABLE messages
+  ADD CONSTRAINT messages_to_user_id_fk 
+    FOREIGN KEY (to_user_id) REFERENCES users(id)
+      ON DELETE CASCADE; 
       
+ALTER TABLE posts
+  ADD CONSTRAINT posts_user_id_fk 
+    FOREIGN KEY (user_id) REFERENCES users(id)
+      ON DELETE CASCADE; 
       
+ ALTER TABLE posts
+  ADD CONSTRAINT posts_community_id_fk 
+    FOREIGN KEY (community_id) REFERENCES communities(id)
+      ON DELETE CASCADE;     
       
-      
-      
+  ALTER TABLE posts
+  ADD CONSTRAINT posts_media_id_fk 
+    FOREIGN KEY (media_id) REFERENCES media(id)
+      ON DELETE CASCADE;      
       
 
 -- 3. Определить кто больше поставил лайков (всего) - мужчины или женщины?
