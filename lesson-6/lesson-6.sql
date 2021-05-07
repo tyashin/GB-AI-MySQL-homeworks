@@ -133,5 +133,41 @@ INNER JOIN profiles
 GROUP BY gender;
 
 -- 4. Вывести для каждого пользователя количество созданных сообщений, постов, загруженных медиафайлов и поставленных лайков.
-
+SELECT 
+	id AS 'User id',
+	CONCAT(first_name, ' ', last_name) AS 'Full name',
+    IFNULL(message_count, 0) AS 'Message count',
+    IFNULL(post_count, 0) AS 'Post count',
+    IFNULL(media_count, 0) AS 'Media count',
+    IFNULL(likes_count, 0) AS 'Likes count'
+FROM users    
+LEFT JOIN (SELECT 
+		from_user_id,
+		count(from_user_id) AS  message_count
+	FROM
+		messages
+	GROUP BY from_user_id) AS m_counter ON 
+		users.id = m_counter.from_user_id
+LEFT JOIN (SELECT 
+		user_id,
+		count(user_id) AS  post_count
+	FROM
+		posts
+	GROUP BY user_id) AS post_counter ON 
+		users.id = post_counter.user_id
+LEFT JOIN (SELECT 
+		user_id,
+		count(user_id) AS  media_count
+	FROM
+		media
+	GROUP BY user_id) AS media_counter ON 
+		users.id = media_counter.user_id
+LEFT JOIN (SELECT 
+		user_id,
+		count(user_id) AS  likes_count
+	FROM
+		likes
+	GROUP BY user_id) AS likes_counter ON 
+		users.id = likes_counter.user_id
+ORDER BY id;
   
