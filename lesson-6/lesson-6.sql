@@ -123,6 +123,14 @@ ALTER TABLE posts
       
 
 -- 3. Определить кто больше поставил лайков (всего) - мужчины или женщины?
+SELECT 
+	gender,
+    count(gender) AS  'gender stats'
+FROM
+    likes
+INNER JOIN profiles
+    ON likes.user_id = profiles.user_id
+GROUP BY gender;
 
 -- 4. Вывести для каждого пользователя количество созданных сообщений, постов, загруженных медиафайлов и поставленных лайков.
 
