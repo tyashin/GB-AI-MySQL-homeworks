@@ -170,4 +170,35 @@ LEFT JOIN (SELECT
 	GROUP BY user_id) AS likes_counter ON 
 		users.id = likes_counter.user_id
 ORDER BY id;
-  
+
+
+-- 4.1. (решение задачи №4 только на вложенных запросах)   
+SELECT 
+	id AS 'User id',
+	CONCAT(first_name, ' ', last_name) AS 'Full name',
+	IFNULL((SELECT 
+		count(from_user_id)
+	FROM
+		messages
+	WHERE messages.from_user_id = users.id
+	GROUP BY from_user_id), 0) AS 'Mesage count',
+    IFNULL((SELECT
+		count(user_id) 
+	FROM
+		posts
+	WHERE posts.user_id = users.id
+	GROUP BY user_id), 0) AS 'Post count',
+    IFNULL((SELECT 
+		count(user_id)
+	FROM
+		media
+	WHERE media.user_id = users.id
+	GROUP BY user_id), 0) AS 'Media count',
+    IFNULL((SELECT 
+		count(user_id)
+	FROM
+		likes
+	WHERE likes.user_id = users.id
+	GROUP BY user_id), 0) AS 'Likes count'	
+FROM users
+ORDER BY id;
