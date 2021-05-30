@@ -2,4 +2,4 @@
 
 ### WIP
 
-**Lessons 1-12**
+**Lessons 2-12**
