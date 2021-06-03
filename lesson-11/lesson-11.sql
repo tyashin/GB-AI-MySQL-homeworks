@@ -87,8 +87,3 @@ FROM
 	users AS u1
 CROSS JOIN users as u2
 CROSS JOIN users as u3;
-
-
--- теперь добавим неуникальные индексы по полям 'email' и 'phone'
-CREATE INDEX email ON users(email);  
-CREATE INDEX phone ON users(phone);  
